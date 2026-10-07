@@ -34,7 +34,7 @@
 
 ### 本地运行
 
-\`\`\`bash
+```bash
 # 克隆仓库
 git clone https://github.com/extrastu/ascskill.git
 cd ascskill
@@ -44,20 +44,20 @@ pnpm install
 
 # 启动开发服务器
 pnpm dev
-\`\`\`
+```
 
 打开 [http://localhost:3000](http://localhost:3000) 即可查看效果,修改 `app/page.tsx` 或 `lib/skills-data.ts` 会自动热更新。
 
 ### 构建生产版本
 
-\`\`\`bash
+```bash
 pnpm build
 pnpm start
-\`\`\`
+```
 
 ## 项目结构
 
-\`\`\`
+```
 .
 ├── app/
 │   ├── page.tsx           # 首页组装(Hero + 安装指南 + 技能浏览器)
@@ -74,7 +74,7 @@ pnpm start
 │   └── site-footer.tsx    # 页脚
 └── lib/
     └── skills-data.ts      # asc-cli 全部 Skill 的结构化数据与示例命令
-\`\`\`
+```
 
 ## 新增 / 修改一个 Skill 示例
 

@@ -11,7 +11,7 @@ export interface Skill {
   description: string
   /** “适用场景” bullet points, in Chinese */
   useWhen: string[]
-  /** Example terminal lines. Lines starting with "#" render as comments. */
+  /** Example terminal lines. "#" lines render as comments; "> " lines are natural-language prompts for an agent (shown, but not copied). */
   example: string[]
   /** Optional stability tag */
   tag?: "stable" | "experimental"
@@ -79,7 +79,7 @@ export const SKILLS: Skill[] = [
       'asc apps list --bundle-id "com.example.myapp" --output json',
       "",
       "# 第二步：交给智能体在浏览器里填写 New App 表单（名称 / SKU / 主语言）",
-      "创建一个 Bundle ID 为 com.example.myapp、SKU 为 MYAPP123、主语言为英语（美国）的新 App Store Connect 应用",
+      "> 创建一个 Bundle ID 为 com.example.myapp、SKU 为 MYAPP123、主语言为英语（美国）的新 App Store Connect 应用",
       "",
       "# 第三步：创建后通过 API 校验，并继续设置主语言、分类等",
       'asc apps list --bundle-id "com.example.myapp" --output json',
@@ -103,7 +103,7 @@ export const SKILLS: Skill[] = [
     example: [
       "# 自动取下一个可用构建号，再归档并导出（具体参数请用 asc xcode archive --help 查看）",
       'asc xcode version edit --next-build-number --app "APP_ID" --platform IOS',
-      "归档并导出我的 iOS 应用为 IPA，以便上传到 App Store Connect",
+      "> 归档并导出我的 iOS 应用为 IPA，以便上传到 App Store Connect",
       "",
       "# 导出后上传，或直接发布到 TestFlight",
       'asc builds upload --app "APP_ID" --ipa ".asc/artifacts/App.ipa" --wait',
@@ -222,7 +222,7 @@ export const SKILLS: Skill[] = [
     ],
     example: [
       "# 先规划（只读），确认计划后再执行；中断后可断点续传并校验",
-      "基于这个 Xcode 归档规划一次私有的 release-testing 安装，先展示具体影响，我确认计划哈希后再执行",
+      "> 基于这个 Xcode 归档规划一次私有的 release-testing 安装，先展示具体影响，我确认计划哈希后再执行",
       "",
       "# 对应的子命令（参数请用 --help 查看）",
       "asc distribute plan --help",
@@ -245,7 +245,7 @@ export const SKILLS: Skill[] = [
     ],
     example: [
       "# 归档并以 Developer ID 方式导出（交给智能体执行 xcodebuild）",
-      "归档我的 macOS 应用，以 Developer ID 方式导出并压缩为 zip",
+      "> 归档我的 macOS 应用，以 Developer ID 方式导出并压缩为 zip",
       "",
       "# 提交公证并等待结果；失败时查看开发者日志",
       'asc notarization submit --file "./YourApp.zip" --wait',
@@ -305,7 +305,17 @@ export const SKILLS: Skill[] = [
       "想检查 Beta 测试员反馈与截图时",
       "需要某个构建的性能诊断（卡顿、磁盘写入、启动耗时）时",
     ],
-    example: ["# 按签名和受影响构建分组展示最新崩溃与反馈", "展示 MyApp 最新的 TestFlight 崩溃与反馈，按签名和受影响构建分组"],
+    example: [
+      "# 查看最近 10 条 TestFlight 崩溃与带截图的 Beta 反馈",
+      'asc testflight crashes list --app "APP_ID" --sort -createdDate --limit 10 --output table',
+      'asc testflight feedback list --app "APP_ID" --sort -createdDate --limit 10 --include-screenshots',
+      "",
+      "# 查看某个构建的卡顿（HANGS）诊断",
+      'asc performance diagnostics list --build-id "BUILD_ID" --diagnostic-type "HANGS"',
+      "",
+      "# 让智能体按签名和受影响构建分组汇总",
+      "> 展示 MyApp 最新的 TestFlight 崩溃与反馈，按签名和受影响构建分组",
+    ],
   },
   {
     id: "asc-screenshot-resize",
@@ -344,7 +354,7 @@ export const SKILLS: Skill[] = [
     ],
     example: [
       "# 构建应用，采集首页与设置页截图，取景后准备上传",
-      "构建我的 iOS 应用，在模拟器中采集首页与设置页截图，加壳取景后准备好上传",
+      "> 构建我的 iOS 应用，在模拟器中采集首页与设置页截图，加壳取景后准备好上传",
       "",
       "# 对应的 asc 子命令（取景前需安装 Koubou：kou setup-frames）",
       "asc screenshots list-frame-devices --output json",
@@ -385,7 +395,7 @@ export const SKILLS: Skill[] = [
     example: [
       "# 下载源语言本地化 → 交给 LLM 翻译 → 上传前人工复核",
       'asc localizations download --version "VERSION_ID" --path "./localizations"',
-      "把我的 en-US App Store 元数据翻译成德语、法语和日语，上传前先给我看改动",
+      "> 把我的 en-US App Store 元数据翻译成德语、法语和日语，上传前先给我看改动",
       'asc localizations upload --version "VERSION_ID" --path "./localizations"',
     ],
   },
@@ -404,7 +414,7 @@ export const SKILLS: Skill[] = [
     example: [
       "# 先拉取规范化元数据，再做离线审计",
       'asc metadata pull --app "APP_ID" --version "1.2.3" --platform IOS --dir "./metadata"',
-      "审计 ./metadata 中的 ASO 问题，再展示 Astro 中针对我最新版本的高价值关键词差距",
+      "> 审计 ./metadata 中的 ASO 问题，再展示 Astro 中针对我最新版本的高价值关键词差距",
       "",
       "# 审计后的关键词调整可直接映射到：",
       'asc metadata keywords diff --app "APP_ID" --version "1.2.3" --platform IOS --dir "./metadata"',
@@ -424,7 +434,7 @@ export const SKILLS: Skill[] = [
     ],
     example: [
       "# 把发布要点整理成文案并本地化到现有语言",
-      "把这些发布要点整理成 en-US 的更新说明文案，并本地化到我现有的所有元数据语言",
+      "> 把这些发布要点整理成 en-US 的更新说明文案，并本地化到我现有的所有元数据语言",
       "",
       "# 复核后先 dry-run，再回写",
       'asc metadata push --app "APP_ID" --version "1.2.3" --dir "./metadata" --dry-run',
@@ -448,7 +458,7 @@ export const SKILLS: Skill[] = [
       "asc subscriptions pricing prices import --help",
       "",
       "# 按购买力平价为多个地区调整并校验",
-      "按购买力平价方式为印度、巴西和墨西哥调整我的订阅价格，并校验最终结果",
+      "> 按购买力平价方式为印度、巴西和墨西哥调整我的订阅价格，并校验最终结果",
     ],
   },
   {
@@ -490,7 +500,7 @@ export const SKILLS: Skill[] = [
       'asc iap list --app "APP_ID" --paginate --output json',
       "",
       "# 审计差异，确认后再创建映射",
-      "审计我的 App Store Connect 订阅与内购同 RevenueCat 的差异，我确认后再创建缺失的映射",
+      "> 审计我的 App Store Connect 订阅与内购同 RevenueCat 的差异，我确认后再创建缺失的映射",
     ],
   },
   {
@@ -550,7 +560,17 @@ export const SKILLS: Skill[] = [
     example: [
       "# 先确认命令契约，再交给智能体执行「查找请求 → 选择实例 → 下载分段 → 校验」",
       "asc analytics view --help",
-      "采集我最新的周度分析报告，私有下载每个分段文件，并在分析前逐一校验完整性",
+      "",
+      "# 查找已有报告请求，并列出某个请求下的报告实例",
+      'asc analytics requests --app "APP_ID" --paginate --output json',
+      'asc analytics view --request-id "REQUEST_ID" --paginate --output json',
+      "",
+      "# 按处理日期与粒度筛选，并下载单个分段（需 asc 3.5.0+）",
+      'asc analytics view --request-id "REQUEST_ID" --processing-date "2026-01-15" --granularity DAILY --paginate --include-segments --output json',
+      'asc analytics download --request-id "REQUEST_ID" --instance-id "INSTANCE_ID" --segment-id "SEGMENT_ID" --output "./segment.txt.gz"',
+      "",
+      "# 让智能体做完整采集与大小 / MD5 校验",
+      "> 采集我最新的周度分析报告，私有下载每个分段文件，并在分析前逐一校验完整性",
     ],
   },
   {
@@ -571,3 +591,18 @@ export const SKILLS: Skill[] = [
     ],
   },
 ]
+
+export const SITE_URL = "https://ascskill.wiki"
+
+export function getSkill(id: string): Skill | undefined {
+  return SKILLS.find((s) => s.id === id)
+}
+
+export function getCategory(key: CategoryKey) {
+  return CATEGORIES.find((c) => c.key === key)!
+}
+
+/** Shell command lines of a skill's example (excludes comments and agent prompts). */
+export function getCommands(skill: Skill): string[] {
+  return skill.example.filter((l) => l.trim() !== "" && !l.trimStart().startsWith("#") && !l.startsWith("> "))
+}

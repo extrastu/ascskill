@@ -3,7 +3,7 @@ import { Hero } from "@/components/hero"
 import { InstallSection } from "@/components/install-section"
 import { SkillsExplorer } from "@/components/skills-explorer"
 import { SiteFooter } from "@/components/site-footer"
-import { SKILLS, CATEGORIES } from "@/lib/skills-data"
+import { SKILLS, CATEGORIES, SITE_URL } from "@/lib/skills-data"
 
 export default function Page() {
   const jsonLd = {
@@ -29,6 +29,7 @@ export default function Page() {
           position: index + 1,
           name: `${skill.title}（${skill.id}）`,
           description: skill.summary,
+          url: `${SITE_URL}/skills/${skill.id}`,
         })),
       },
       {
@@ -64,7 +65,7 @@ export default function Page() {
   }
 
   return (
-    <main className="min-h-screen">
+    <main id="main" className="min-h-screen">
       <script
         type="application/ld+json"
         // eslint-disable-next-line react/no-danger

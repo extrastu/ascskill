@@ -14,9 +14,7 @@ const geistMono = Geist_Mono({
   variable: '--font-mono',
 })
 
-const siteUrl = process.env.VERCEL_PROJECT_PRODUCTION_URL
-  ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
-  : 'http://localhost:3000'
+const siteUrl = 'https://ascskill.wiki'
 
 const title = 'ASC Skills 手册｜ASC CLI Skills 全量中文示例（asc-cli）'
 const description =

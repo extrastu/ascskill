@@ -1,9 +1,7 @@
 import type { MetadataRoute } from "next"
 import { CATEGORIES } from "@/lib/skills-data"
 
-const siteUrl = process.env.VERCEL_PROJECT_PRODUCTION_URL
-  ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
-  : "http://localhost:3000"
+const siteUrl = "https://ascskill.wiki"
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const categoryEntries: MetadataRoute.Sitemap = CATEGORIES.map((category) => ({

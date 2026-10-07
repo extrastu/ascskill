@@ -38,15 +38,15 @@ export function TerminalBlock({ lines, title = "zsh", className }: TerminalBlock
   return (
     <div
       className={cn(
-        "group relative overflow-hidden rounded-lg border border-border bg-[oklch(0.12_0.012_258)]",
+        "group relative overflow-hidden rounded-lg border border-white/10 bg-[oklch(0.12_0.012_258)] text-[oklch(0.94_0.012_85)]",
         className,
       )}
     >
-      <div className="flex items-center gap-2 border-b border-border bg-[oklch(0.145_0.012_258)] px-3 py-2">
+      <div className="flex items-center gap-2 border-b border-white/10 bg-[oklch(0.145_0.012_258)] px-3 py-2">
         <span className="size-2.5 rounded-full bg-[oklch(0.65_0.2_25)]" aria-hidden="true" />
         <span className="size-2.5 rounded-full bg-[oklch(0.78_0.15_73)]" aria-hidden="true" />
         <span className="size-2.5 rounded-full bg-[oklch(0.7_0.12_150)]" aria-hidden="true" />
-        <span className="ml-2 font-mono text-[11px] tracking-wide text-muted-foreground">{title}</span>
+        <span className="ml-2 font-mono text-[11px] tracking-wide text-[oklch(0.65_0.02_90)]">{title}</span>
         {copyText && <button
           type="button"
           onClick={handleCopy}
@@ -55,7 +55,7 @@ export function TerminalBlock({ lines, title = "zsh", className }: TerminalBlock
             "ml-auto flex items-center gap-1.5 rounded-md px-2 py-1 font-mono text-[11px] transition-colors",
             copied
               ? "text-[oklch(0.7_0.12_150)]"
-              : "text-muted-foreground hover:bg-border/60 hover:text-foreground",
+              : "text-[oklch(0.65_0.02_90)] hover:bg-white/10 hover:text-[oklch(0.94_0.012_85)]",
           )}
         >
           {copied ? (
@@ -81,22 +81,22 @@ export function TerminalBlock({ lines, title = "zsh", className }: TerminalBlock
               <div
                 key={i}
                 className={cn(
-                  comment && "text-muted-foreground",
+                  comment && "text-[oklch(0.65_0.02_90)]",
                   blank && "h-3",
-                  prompt && "text-secondary",
-                  !comment && !prompt && !blank && "text-foreground",
+                  prompt && "text-[oklch(0.7_0.09_195)]",
+                  !comment && !prompt && !blank && "text-[oklch(0.94_0.012_85)]",
                 )}
               >
                 {prompt ? (
                   <>
-                    <span className="mr-2 select-none rounded border border-secondary/40 px-1 text-[10px]">
+                    <span className="mr-2 select-none rounded border border-[oklch(0.7_0.09_195/0.4)] px-1 text-[10px]">
                       {t.promptTag}
                     </span>
                     {line.slice(2)}
                   </>
                 ) : (
                   <>
-                    {!comment && !blank && <span className="mr-2 select-none text-primary">$</span>}
+                    {!comment && !blank && <span className="mr-2 select-none text-[oklch(0.78_0.15_73)]">$</span>}
                     {line}
                   </>
                 )}

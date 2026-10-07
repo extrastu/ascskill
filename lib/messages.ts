@@ -18,6 +18,11 @@ export const messages = {
     install: "安装",
     skills: "技能",
     language: "语言",
+    theme: "主题",
+    themeSystem: "跟随系统",
+    themeLight: "浅色",
+    themeDark: "深色",
+    themeSwitch: "切换主题（当前：{mode}）",
   },
   hero: {
     h1a: "把 App Store 发布工作，",

@@ -24,7 +24,7 @@ export function LanguageSwitcher() {
           lang={LOCALE_META[l].htmlLang}
           aria-current={l === locale ? "true" : undefined}
           className={cn(
-            "rounded px-2 py-1 font-mono text-xs transition-colors",
+            "whitespace-nowrap rounded px-2 py-1 font-mono text-xs transition-colors",
             l === locale ? "bg-primary text-primary-foreground" : "text-muted-foreground hover:text-foreground",
           )}
         >

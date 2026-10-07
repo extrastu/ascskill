@@ -80,10 +80,16 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
 }
 
 export const viewport: Viewport = {
-  colorScheme: 'dark',
-  themeColor: '#0b0c0f',
+  colorScheme: 'light dark',
+  themeColor: [
+    { media: '(prefers-color-scheme: light)', color: '#fbfaf7' },
+    { media: '(prefers-color-scheme: dark)', color: '#0b0c0f' },
+  ],
   userScalable: true,
 }
+
+// Runs before first paint: apply a stored explicit choice; otherwise leave data-theme unset so CSS follows the OS.
+const themeScript = `try{var t=localStorage.getItem('theme');if(t==='light'||t==='dark')document.documentElement.dataset.theme=t}catch(e){}`
 
 export default async function RootLayout({
   children,
@@ -98,7 +104,14 @@ export default async function RootLayout({
   const sans = locale === 'zh-TW' ? notoSansTC : notoSansSC
 
   return (
-    <html lang={LOCALE_META[locale].htmlLang} className={`${sans.variable} ${geistMono.variable} bg-background`}>
+    <html
+      lang={LOCALE_META[locale].htmlLang}
+      suppressHydrationWarning
+      className={`${sans.variable} ${geistMono.variable} bg-background`}
+    >
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: themeScript }} />
+      </head>
       <body className="font-sans antialiased">
         <a
           href="#main"

@@ -55,6 +55,18 @@ pnpm build
 pnpm start
 ```
 
+## 多语言（简体 / 繁体）
+
+| 路径 | 语言 |
+| --- | --- |
+| `/`、`/zh-CN` | 简体中文（`/` 为规范地址，`/zh-CN` 的 canonical 指向 `/`） |
+| `/zh-TW` | 繁体中文 |
+
+- 访问不带语言前缀的路径时，`proxy.ts` 会按 Cookie（`NEXT_LOCALE`）→ 浏览器 `Accept-Language` 的顺序选择语言：繁体偏好（zh-TW / zh-HK / zh-MO / zh-Hant）重定向到 `/zh-TW`，其余在原 URL 下直接显示简体。无 `Accept-Language` 的爬虫得到简体。
+- 访问 `/zh-CN`、`/zh-TW` 会记住选择，页头的「简体 / 繁體」切换即基于此。
+- 内容只维护**简体**一份（`lib/skills-data.ts`、`lib/messages.ts`），繁体在构建时用 [OpenCC](https://github.com/nk2028/opencc-js)（`cn → twp`）自动转换，并在 `lib/i18n-server.ts` 的 `TW_FIXES` 中修正个别用词（如 审核→審核、发布→發佈）。发现繁体用词不当时，往 `TW_FIXES` 加一条即可。
+- 每个语言版本都有独立的 canonical、`hreflang`、站点地图条目与 JSON-LD。
+
 ## 项目结构
 
 ```

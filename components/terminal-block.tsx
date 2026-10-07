@@ -2,6 +2,7 @@
 
 import { useState } from "react"
 import { Check, Copy } from "lucide-react"
+import { useI18n } from "@/components/i18n-provider"
 import { cn } from "@/lib/utils"
 
 interface TerminalBlockProps {
@@ -15,6 +16,8 @@ const isComment = (line: string) => line.trimStart().startsWith("#")
 const isPrompt = (line: string) => line.startsWith("> ")
 
 export function TerminalBlock({ lines, title = "zsh", className }: TerminalBlockProps) {
+  const { m } = useI18n()
+  const t = m.terminal
   const [copied, setCopied] = useState(false)
 
   const copyText = lines
@@ -47,7 +50,7 @@ export function TerminalBlock({ lines, title = "zsh", className }: TerminalBlock
         {copyText && <button
           type="button"
           onClick={handleCopy}
-          aria-label={copied ? "命令已复制" : "复制命令"}
+          aria-label={copied ? t.copiedAria : t.copyAria}
           className={cn(
             "ml-auto flex items-center gap-1.5 rounded-md px-2 py-1 font-mono text-[11px] transition-colors",
             copied
@@ -58,12 +61,12 @@ export function TerminalBlock({ lines, title = "zsh", className }: TerminalBlock
           {copied ? (
             <>
               <Check className="size-3.5" aria-hidden="true" />
-              已复制
+              {t.copied}
             </>
           ) : (
             <>
               <Copy className="size-3.5" aria-hidden="true" />
-              复制
+              {t.copy}
             </>
           )}
         </button>}
@@ -87,7 +90,7 @@ export function TerminalBlock({ lines, title = "zsh", className }: TerminalBlock
                 {prompt ? (
                   <>
                     <span className="mr-2 select-none rounded border border-secondary/40 px-1 text-[10px]">
-                      对智能体说
+                      {t.promptTag}
                     </span>
                     {line.slice(2)}
                   </>

@@ -1,40 +1,42 @@
 import { TerminalBlock } from "@/components/terminal-block"
-import { SKILLS, CATEGORIES } from "@/lib/skills-data"
+import { fmt, type Locale } from "@/lib/i18n"
+import { getCategories, getMessages, getSkills } from "@/lib/i18n-server"
 
-export function Hero() {
+export function Hero({ locale }: { locale: Locale }) {
+  const m = getMessages(locale).hero
+  const n = getSkills(locale).length
+  const categories = getCategories(locale)
+
   return (
     <section id="top" className="mx-auto max-w-5xl px-4 pb-14 pt-14 sm:px-6 sm:pt-20">
       <p className="font-mono text-xs uppercase tracking-[0.2em] text-primary">
         ASC CLI Skills · App Store Connect CLI Agent Skills
       </p>
       <h1 className="mt-4 text-balance text-4xl font-semibold leading-tight text-foreground sm:text-5xl">
-        把 App Store 发布工作，
+        {m.h1a}
         <br className="hidden sm:block" />
-        交给 <span className="text-primary">asc</span> 和它的 {SKILLS.length} 个 ASC Skills
+        {m.h1b}
+        <span className="text-primary">asc</span>
+        {fmt(m.h1c, { n })}
       </h1>
       <p className="mt-5 max-w-2xl text-pretty text-base leading-relaxed text-muted-foreground sm:text-lg">
-        rorkai/App-Store-Connect-CLI 为 AI 智能体提供了一整套 ASC CLI Skills（又称 AscSkill /
-        AscCliSkill），覆盖构建打包、签名分发、TestFlight、元数据本地化、订阅定价和广告投放。
-        本页收录全部 ASC Skills 的中文说明与可直接使用的命令示例。
+        {m.intro}
       </p>
 
       <div className="mt-8">
-        <TerminalBlock
-          title="安装技能包"
-          lines={["# 全局安装 25 个经审查的 asc 技能", "asc install-skills"]}
-        />
+        <TerminalBlock title={m.installTitle} lines={[fmt(m.installComment, { n }), "asc install-skills"]} />
       </div>
 
       <div className="mt-5 flex items-center gap-3 font-mono text-xs text-muted-foreground">
-        <span>{CATEGORIES.length} 个分类</span>
+        <span>{fmt(m.categories, { n: categories.length })}</span>
         <span aria-hidden="true" className="text-border">
           ·
         </span>
-        <span>{SKILLS.length} 个技能</span>
+        <span>{fmt(m.skills, { n })}</span>
       </div>
 
       <div className="mt-6 flex flex-wrap gap-2">
-        {CATEGORIES.map((c) => (
+        {categories.map((c) => (
           <a
             key={c.key}
             href={`#cat-${c.key}`}

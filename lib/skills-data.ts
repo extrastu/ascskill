@@ -29,7 +29,13 @@ export type CategoryKey =
   | "automation"
   | "community"
 
-export const CATEGORIES: { key: CategoryKey; label: string; description: string }[] = [
+export interface Category {
+  key: CategoryKey
+  label: string
+  description: string
+}
+
+export const CATEGORIES: Category[] = [
   { key: "core", label: "核心用法", description: "命令速查与基础能力" },
   { key: "build", label: "应用创建与构建", description: "创建应用、编译归档、解析资源 ID" },
   { key: "release", label: "发布与审核", description: "暂存版本、提交审核、健康诊断" },

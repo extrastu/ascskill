@@ -25,7 +25,7 @@ export function SiteHeader() {
             技能
           </Link>
           <a
-            href="https://github.com/rorkai/app-store-connect-cli-skills"
+            href="https://github.com/extrastu/ascskill"
             target="_blank"
             rel="noreferrer"
             className="font-mono text-xs text-muted-foreground transition-colors hover:text-primary"

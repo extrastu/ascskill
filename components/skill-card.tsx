@@ -1,9 +1,14 @@
 import Link from "next/link"
 import { ArrowUpRight, ChevronRight } from "lucide-react"
 import type { Skill } from "@/lib/skills-data"
+import { useI18n } from "@/components/i18n-provider"
+import { fmt, localePath } from "@/lib/i18n"
 import { TerminalBlock } from "@/components/terminal-block"
 
 export function SkillCard({ skill }: { skill: Skill }) {
+  const { locale, m } = useI18n()
+  const t = m.card
+  const href = localePath(locale, `/skills/${skill.id}`)
   return (
     <article
       id={skill.id}
@@ -14,7 +19,7 @@ export function SkillCard({ skill }: { skill: Skill }) {
           <p className="font-mono text-xs text-primary">{skill.id}</p>
           <h3 className="mt-1 text-balance text-lg font-semibold text-foreground sm:text-xl">
             <Link
-              href={`/skills/${skill.id}`}
+              href={href}
               className="hover:text-primary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
             >
               {skill.title}
@@ -23,7 +28,7 @@ export function SkillCard({ skill }: { skill: Skill }) {
         </div>
         {skill.tag === "experimental" && (
           <span className="rounded-full border border-secondary/40 bg-secondary/10 px-2.5 py-1 font-mono text-[11px] text-secondary">
-            实验性
+            {t.experimental}
           </span>
         )}
       </header>
@@ -32,7 +37,7 @@ export function SkillCard({ skill }: { skill: Skill }) {
 
       <div className="mt-4">
         <h4 className="mb-2 font-mono text-xs uppercase tracking-wider text-muted-foreground">
-          适用场景
+          {t.useWhen}
         </h4>
         <ul className="space-y-1.5">
           {skill.useWhen.map((item, i) => (
@@ -46,17 +51,17 @@ export function SkillCard({ skill }: { skill: Skill }) {
 
       <div className="mt-4">
         <h4 className="mb-2 font-mono text-xs uppercase tracking-wider text-muted-foreground">
-          使用示例
+          {t.example}
         </h4>
         <TerminalBlock lines={skill.example} />
       </div>
 
       <Link
-        href={`/skills/${skill.id}`}
-        aria-label={`查看${skill.title}详情`}
+        href={href}
+        aria-label={fmt(t.detailsAria, { title: skill.title })}
         className="mt-4 inline-flex items-center gap-1 font-mono text-xs text-primary hover:underline"
       >
-        查看详情
+        {t.details}
         <ArrowUpRight className="size-3.5" aria-hidden="true" />
       </Link>
     </article>

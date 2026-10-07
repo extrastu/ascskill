@@ -2,13 +2,17 @@
 
 import { useEffect, useMemo, useRef, useState } from "react"
 import { Search, X } from "lucide-react"
-import { CATEGORIES, SKILLS, getCommands, type CategoryKey } from "@/lib/skills-data"
+import { getCommands, type Category, type Skill } from "@/lib/skills-data"
+import { useI18n } from "@/components/i18n-provider"
+import { fmt } from "@/lib/i18n"
 import { SkillCard } from "@/components/skill-card"
 import { cn } from "@/lib/utils"
 
-export function SkillsExplorer() {
+export function SkillsExplorer({ skills: SKILLS, categories: CATEGORIES }: { skills: Skill[]; categories: Category[] }) {
+  const { m } = useI18n()
+  const t = m.explorer
   const [query, setQuery] = useState("")
-  const [activeCategory, setActiveCategory] = useState<CategoryKey | "all">("all")
+  const [activeCategory, setActiveCategory] = useState<string>("all")
 
   const inputRef = useRef<HTMLInputElement>(null)
 
@@ -34,14 +38,14 @@ export function SkillsExplorer() {
       const haystack = `${skill.id} ${skill.title} ${skill.summary} ${skill.description} ${skill.useWhen.join(" ")} ${getCommands(skill).join(" ")}`.toLowerCase()
       return haystack.includes(q)
     })
-  }, [query, activeCategory])
+  }, [SKILLS, query, activeCategory])
 
   const grouped = useMemo(() => {
     return CATEGORIES.map((category) => ({
       category,
       skills: filtered.filter((s) => s.category === category.key),
     })).filter((group) => group.skills.length > 0)
-  }, [filtered])
+  }, [filtered, CATEGORIES])
 
   return (
     <div id="skills" className="scroll-mt-16">
@@ -57,8 +61,8 @@ export function SkillsExplorer() {
               type="search"
               value={query}
               onChange={(e) => setQuery(e.target.value)}
-              placeholder="搜索技能或命令，例如“截图”“签名”“notarization”…（按 / 聚焦）"
-              aria-label="搜索技能"
+              placeholder={t.placeholder}
+              aria-label={t.searchLabel}
               className="w-full rounded-lg border border-border bg-card py-2.5 pl-9 pr-3 font-mono text-sm text-foreground placeholder:text-muted-foreground focus:border-primary/60 focus:outline-none focus:ring-2 focus:ring-ring"
             />
             {query && (
@@ -68,7 +72,7 @@ export function SkillsExplorer() {
                   setQuery("")
                   inputRef.current?.focus()
                 }}
-                aria-label="清除搜索"
+                aria-label={t.clear}
                 className="absolute right-2 top-1/2 -translate-y-1/2 rounded p-1 text-muted-foreground hover:text-foreground"
               >
                 <X className="size-4" aria-hidden="true" />
@@ -76,7 +80,7 @@ export function SkillsExplorer() {
             )}
           </div>
           <p className="font-mono text-xs text-muted-foreground" role="status" aria-live="polite">
-            {query || activeCategory !== "all" ? `找到 ${filtered.length} / ${SKILLS.length} 个技能` : `共 ${SKILLS.length} 个技能`}
+            {query || activeCategory !== "all" ? fmt(t.found, { n: filtered.length, total: SKILLS.length }) : fmt(t.total, { n: SKILLS.length })}
           </p>
           <div className="flex flex-wrap gap-2">
             <button
@@ -89,7 +93,7 @@ export function SkillsExplorer() {
                   : "border-border bg-card text-muted-foreground hover:text-foreground",
               )}
             >
-              全部 {SKILLS.length}
+              {fmt(t.all, { n: SKILLS.length })}
             </button>
             {CATEGORIES.map((category) => {
               const count = SKILLS.filter((s) => s.category === category.key).length
@@ -116,7 +120,7 @@ export function SkillsExplorer() {
       <div className="mx-auto mt-10 max-w-5xl space-y-16">
         {grouped.length === 0 && (
           <p className="py-16 text-center font-mono text-sm text-muted-foreground">
-            没有找到匹配 &ldquo;{query}&rdquo; 的技能，换个关键词试试。
+            {fmt(t.empty, { q: query })}
             <button
               type="button"
               onClick={() => {
@@ -125,7 +129,7 @@ export function SkillsExplorer() {
               }}
               className="ml-2 text-primary hover:underline"
             >
-              重置筛选
+              {t.reset}
             </button>
           </p>
         )}

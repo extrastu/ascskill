@@ -23,10 +23,9 @@ export function Hero() {
           title="安装技能包"
           lines={["# 全局安装 23 个经审查的 asc 技能", "asc install-skills"]}
         />
-        <div className="flex flex-wrap gap-2 self-center sm:flex-col sm:items-end">
-          <span className="font-mono text-xs text-muted-foreground">
-            {CATEGORIES.length} 个分类 · {SKILLS.length} 个技能
-          </span>
+        <div className="flex flex-col gap-0.5 self-center text-right sm:items-end">
+          <span className="font-mono text-xs text-muted-foreground">{CATEGORIES.length} 个分类</span>
+          <span className="font-mono text-xs text-muted-foreground">{SKILLS.length} 个技能</span>
         </div>
       </div>
 

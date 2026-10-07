@@ -104,4 +104,4 @@ pnpm start
 
 ## License
 
-本项目采用 [MIT License](./LICENSE) 开源(如仓库尚未包含 `LICENSE` 文件,请在发布前补充)。asc-cli 本体的许可证请参考其[上游仓库](https://github.com/rorkai/App-Store-Connect-CLI)。
+本项目采用 [MIT License](./LICENSE) 开源,欢迎自由使用、修改和分发。asc-cli 本体的许可证请参考其[上游仓库](https://github.com/rorkai/App-Store-Connect-CLI)。

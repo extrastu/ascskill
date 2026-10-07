@@ -16,7 +16,7 @@ const installLines: Record<Tab, string[]> = {
   brew: ["# 推荐方式（macOS / Linux）", "brew install asc"],
   curl: ["# macOS / Linux 一键安装脚本", "curl -fsSL https://asccli.sh/install | bash"],
   winget: [
-    "# Windows（WinGet）",
+    "# Windows（WinGet 包审核通过后可用；未上架前请从 GitHub Releases 下载已签名的二进制）",
     "winget install asc",
     "",
     "# 包名冲突时使用精确 ID",
@@ -115,7 +115,7 @@ export function InstallSection() {
             <div className="rounded-lg border border-border bg-background p-4">
               <h4 className="font-mono text-sm font-semibold text-foreground">安装全部 Agent Skills</h4>
               <p className="mt-1 text-sm leading-relaxed text-muted-foreground">
-                将 23 个官方技能一次性安装到全局 agent-skills 目录，跨项目可用，且锁定到已审核的提交版本。
+                将 25 个官方技能一次性安装到全局 agent-skills 目录，跨项目可用，且锁定到已审核的提交版本。
               </p>
               <TerminalBlock lines={["git --version", "asc install-skills"]} className="mt-3" />
             </div>

@@ -18,18 +18,22 @@ export function Hero() {
         本页收录全部 ASC Skills 的中文说明与可直接使用的命令示例。
       </p>
 
-      <div className="mt-8 grid gap-4 sm:grid-cols-[1fr_auto] sm:items-start">
+      <div className="mt-8">
         <TerminalBlock
           title="安装技能包"
           lines={["# 全局安装 23 个经审查的 asc 技能", "asc install-skills"]}
         />
-        <div className="flex flex-col gap-0.5 self-center text-right sm:items-end">
-          <span className="font-mono text-xs text-muted-foreground">{CATEGORIES.length} 个分类</span>
-          <span className="font-mono text-xs text-muted-foreground">{SKILLS.length} 个技能</span>
-        </div>
       </div>
 
-      <div className="mt-8 flex flex-wrap gap-2">
+      <div className="mt-5 flex items-center gap-3 font-mono text-xs text-muted-foreground">
+        <span>{CATEGORIES.length} 个分类</span>
+        <span aria-hidden="true" className="text-border">
+          ·
+        </span>
+        <span>{SKILLS.length} 个技能</span>
+      </div>
+
+      <div className="mt-6 flex flex-wrap gap-2">
         {CATEGORIES.map((c) => (
           <a
             key={c.key}

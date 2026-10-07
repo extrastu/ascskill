@@ -21,7 +21,7 @@ export function Hero() {
       <div className="mt-8">
         <TerminalBlock
           title="安装技能包"
-          lines={["# 全局安装 23 个经审查的 asc 技能", "asc install-skills"]}
+          lines={["# 全局安装 25 个经审查的 asc 技能", "asc install-skills"]}
         />
       </div>
 

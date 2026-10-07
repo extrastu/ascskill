@@ -1,4 +1,5 @@
-import { ChevronRight } from "lucide-react"
+import Link from "next/link"
+import { ArrowUpRight, ChevronRight } from "lucide-react"
 import type { Skill } from "@/lib/skills-data"
 import { TerminalBlock } from "@/components/terminal-block"
 
@@ -12,7 +13,12 @@ export function SkillCard({ skill }: { skill: Skill }) {
         <div>
           <p className="font-mono text-xs text-primary">{skill.id}</p>
           <h3 className="mt-1 text-balance text-lg font-semibold text-foreground sm:text-xl">
-            {skill.title}
+            <Link
+              href={`/skills/${skill.id}`}
+              className="hover:text-primary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+            >
+              {skill.title}
+            </Link>
           </h3>
         </div>
         {skill.tag === "experimental" && (
@@ -44,6 +50,15 @@ export function SkillCard({ skill }: { skill: Skill }) {
         </h4>
         <TerminalBlock lines={skill.example} />
       </div>
+
+      <Link
+        href={`/skills/${skill.id}`}
+        aria-label={`查看${skill.title}详情`}
+        className="mt-4 inline-flex items-center gap-1 font-mono text-xs text-primary hover:underline"
+      >
+        查看详情
+        <ArrowUpRight className="size-3.5" aria-hidden="true" />
+      </Link>
     </article>
   )
 }

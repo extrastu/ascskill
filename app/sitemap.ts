@@ -1,29 +1,15 @@
 import type { MetadataRoute } from "next"
-import { CATEGORIES } from "@/lib/skills-data"
-
-const siteUrl = "https://ascskill.wiki"
+import { SKILLS, SITE_URL } from "@/lib/skills-data"
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const categoryEntries: MetadataRoute.Sitemap = CATEGORIES.map((category) => ({
-    url: `${siteUrl}/#cat-${category.key}`,
-    lastModified: new Date(),
-    changeFrequency: "weekly",
-    priority: 0.6,
-  }))
-
+  const now = new Date()
   return [
-    {
-      url: siteUrl,
-      lastModified: new Date(),
-      changeFrequency: "weekly",
-      priority: 1,
-    },
-    {
-      url: `${siteUrl}/#install`,
-      lastModified: new Date(),
-      changeFrequency: "monthly",
-      priority: 0.8,
-    },
-    ...categoryEntries,
+    { url: SITE_URL, lastModified: now, changeFrequency: "weekly", priority: 1 },
+    ...SKILLS.map((skill) => ({
+      url: `${SITE_URL}/skills/${skill.id}`,
+      lastModified: now,
+      changeFrequency: "monthly" as const,
+      priority: 0.7,
+    })),
   ]
 }

@@ -10,11 +10,15 @@ interface TerminalBlockProps {
   className?: string
 }
 
+const isComment = (line: string) => line.trimStart().startsWith("#")
+/** "> " lines are natural-language prompts for an AI agent, not shell commands. */
+const isPrompt = (line: string) => line.startsWith("> ")
+
 export function TerminalBlock({ lines, title = "zsh", className }: TerminalBlockProps) {
   const [copied, setCopied] = useState(false)
 
   const copyText = lines
-    .filter((line) => !line.trimStart().startsWith("#") && line.trim() !== "")
+    .filter((line) => !isComment(line) && !isPrompt(line) && line.trim() !== "")
     .map((line) => line.replace(/\s*\\$/, ""))
     .join("\n")
 
@@ -40,7 +44,7 @@ export function TerminalBlock({ lines, title = "zsh", className }: TerminalBlock
         <span className="size-2.5 rounded-full bg-[oklch(0.78_0.15_73)]" aria-hidden="true" />
         <span className="size-2.5 rounded-full bg-[oklch(0.7_0.12_150)]" aria-hidden="true" />
         <span className="ml-2 font-mono text-[11px] tracking-wide text-muted-foreground">{title}</span>
-        <button
+        {copyText && <button
           type="button"
           onClick={handleCopy}
           aria-label={copied ? "命令已复制" : "复制命令"}
@@ -62,24 +66,37 @@ export function TerminalBlock({ lines, title = "zsh", className }: TerminalBlock
               复制
             </>
           )}
-        </button>
+        </button>}
       </div>
       <pre className="overflow-x-auto px-4 py-3 font-mono text-[13px] leading-relaxed">
         <code>
           {lines.map((line, i) => {
-            const isComment = line.trimStart().startsWith("#")
-            const isBlank = line.trim() === ""
+            const comment = isComment(line)
+            const prompt = isPrompt(line)
+            const blank = line.trim() === ""
             return (
               <div
                 key={i}
                 className={cn(
-                  isComment && "text-muted-foreground",
-                  isBlank && "h-3",
-                  !isComment && !isBlank && "text-foreground",
+                  comment && "text-muted-foreground",
+                  blank && "h-3",
+                  prompt && "text-secondary",
+                  !comment && !prompt && !blank && "text-foreground",
                 )}
               >
-                {!isComment && !isBlank && <span className="mr-2 select-none text-primary">$</span>}
-                {line}
+                {prompt ? (
+                  <>
+                    <span className="mr-2 select-none rounded border border-secondary/40 px-1 text-[10px]">
+                      对智能体说
+                    </span>
+                    {line.slice(2)}
+                  </>
+                ) : (
+                  <>
+                    {!comment && !blank && <span className="mr-2 select-none text-primary">$</span>}
+                    {line}
+                  </>
+                )}
               </div>
             )
           })}

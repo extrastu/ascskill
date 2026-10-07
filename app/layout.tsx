@@ -41,7 +41,6 @@ export const metadata: Metadata = {
     'App Store Connect Agent Skills',
     'asc install-skills',
   ],
-  generator: 'v0.app',
   alternates: {
     canonical: '/',
   },
@@ -100,6 +99,12 @@ export default function RootLayout({
   return (
     <html lang="zh-CN" className={`${notoSansSC.variable} ${geistMono.variable} bg-background`}>
       <body className="font-sans antialiased">
+        <a
+          href="#main"
+          className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-50 focus:rounded-md focus:bg-primary focus:px-3 focus:py-2 focus:text-primary-foreground"
+        >
+          跳到正文
+        </a>
         {children}
         {process.env.NODE_ENV === 'production' && <Analytics />}
       </body>

@@ -1,5 +1,6 @@
 import { SiteHeader } from "@/components/site-header"
 import { Hero } from "@/components/hero"
+import { InstallSection } from "@/components/install-section"
 import { SkillsExplorer } from "@/components/skills-explorer"
 import { SiteFooter } from "@/components/site-footer"
 
@@ -8,6 +9,7 @@ export default function Page() {
     <main className="min-h-screen">
       <SiteHeader />
       <Hero />
+      <InstallSection />
       <div className="px-4 pb-20 sm:px-6">
         <SkillsExplorer />
       </div>

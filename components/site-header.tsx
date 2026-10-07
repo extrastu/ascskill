@@ -10,14 +10,22 @@ export function SiteHeader() {
           </span>
           <span className="font-mono text-sm font-medium text-foreground">asc-cli 技能手册</span>
         </a>
-        <a
-          href="https://github.com/rorkai/app-store-connect-cli-skills"
-          target="_blank"
-          rel="noreferrer"
-          className="font-mono text-xs text-muted-foreground transition-colors hover:text-primary"
-        >
-          GitHub ↗
-        </a>
+        <nav className="flex items-center gap-5">
+          <a
+            href="#install"
+            className="font-mono text-xs text-muted-foreground transition-colors hover:text-primary"
+          >
+            安装
+          </a>
+          <a
+            href="https://github.com/rorkai/app-store-connect-cli-skills"
+            target="_blank"
+            rel="noreferrer"
+            className="font-mono text-xs text-muted-foreground transition-colors hover:text-primary"
+          >
+            GitHub ↗
+          </a>
+        </nav>
       </div>
     </header>
   )

@@ -67,6 +67,20 @@ pnpm start
 - 内容只维护**简体**一份（`lib/skills-data.ts`、`lib/messages.ts`），繁体在构建时用 [OpenCC](https://github.com/nk2028/opencc-js)（`cn → twp`）自动转换，并在 `lib/i18n-server.ts` 的 `TW_FIXES` 中修正个别用词（如 审核→審核、发布→發佈）。发现繁体用词不当时，往 `TW_FIXES` 加一条即可。
 - 每个语言版本都有独立的 canonical、`hreflang`、站点地图条目与 JSON-LD。
 
+## 主题切换
+
+页头右侧的按钮循环切换：**跟随系统（默认）→ 浅色 → 深色**。「跟随系统」下不写入任何状态，完全由 CSS 的 `prefers-color-scheme` 决定；选择浅色 / 深色后写入 `localStorage.theme`，并在 `<html data-theme>` 上生效（`app/[locale]/layout.tsx` 中的内联脚本在首次绘制前应用，避免闪烁）。配色变量见 `app/globals.css`；终端代码块在两种主题下都保持深色。
+
+## 面向 LLM 的文本（llms.txt）
+
+站点按 [llms.txt](https://llmstxt.org/) 约定提供纯文本入口，由 `lib/llms.ts` 基于 `lib/skills-data.ts` 自动生成，新增或修改技能后无需手动维护：
+
+| 地址 | 内容 |
+| --- | --- |
+| `/llms.txt`（别名 `/llm.txt`） | 简体中文索引：站点说明 + 按分类列出全部技能及详情页链接 |
+| `/llms-full.txt` | 简体中文完整内容：每个技能的说明、适用场景与全部命令示例 |
+| `/zh-TW/llms.txt`、`/zh-TW/llms-full.txt` | 繁体中文版本（`/zh-CN/...` 同简体） |
+
 ## 项目结构
 
 ```

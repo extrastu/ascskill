@@ -48,8 +48,42 @@
 }
 
 :root {
-  color-scheme: dark;
-  /* Terminal-inspired ink background, warm amber phosphor accent */
+  /* Light palette (default). Dark is applied below, either by the OS (no data-theme)
+     or explicitly (data-theme="dark"). data-theme="light" pins light over a dark OS. */
+  color-scheme: light;
+  --background: oklch(0.985 0.004 85);
+  --foreground: oklch(0.2 0.015 258);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.2 0.015 258);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.2 0.015 258);
+  --primary: oklch(0.52 0.14 62);
+  --primary-foreground: oklch(0.99 0 0);
+  --secondary: oklch(0.5 0.09 195);
+  --secondary-foreground: oklch(0.99 0 0);
+  --muted: oklch(0.95 0.006 258);
+  --muted-foreground: oklch(0.45 0.02 258);
+  --accent: oklch(0.94 0.008 258);
+  --accent-foreground: oklch(0.2 0.015 258);
+  --destructive: oklch(0.55 0.2 25);
+  --border: oklch(0 0 0 / 12%);
+  --input: oklch(0 0 0 / 14%);
+  --ring: oklch(0.52 0.14 62 / 45%);
+  --sidebar: oklch(0.97 0.005 258);
+  --sidebar-foreground: oklch(0.2 0.015 258);
+  --sidebar-primary: oklch(0.52 0.14 62);
+  --sidebar-primary-foreground: oklch(0.99 0 0);
+  --sidebar-accent: oklch(0.94 0.008 258);
+  --sidebar-accent-foreground: oklch(0.2 0.015 258);
+  --sidebar-border: oklch(0 0 0 / 12%);
+  --sidebar-ring: oklch(0.52 0.14 62 / 45%);
+  --radius: 0.5rem;
+}
+
+/* Terminal-inspired ink background, warm amber phosphor accent */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) {
+    color-scheme: dark;
   --background: oklch(0.16 0.012 258);
   --foreground: oklch(0.94 0.012 85);
   --card: oklch(0.205 0.014 258);
@@ -73,7 +107,42 @@
   --chart-3: oklch(0.6 0.1 258);
   --chart-4: oklch(0.55 0.12 30);
   --chart-5: oklch(0.65 0.02 90);
-  --radius: 0.5rem;
+  --sidebar: oklch(0.18 0.012 258);
+  --sidebar-foreground: oklch(0.94 0.012 85);
+  --sidebar-primary: oklch(0.78 0.15 73);
+  --sidebar-primary-foreground: oklch(0.18 0.02 70);
+  --sidebar-accent: oklch(0.27 0.016 258);
+  --sidebar-accent-foreground: oklch(0.94 0.012 85);
+  --sidebar-border: oklch(1 0 0 / 10%);
+  --sidebar-ring: oklch(0.78 0.15 73 / 50%);
+  }
+}
+
+:root[data-theme='dark'] {
+  color-scheme: dark;
+  --background: oklch(0.16 0.012 258);
+  --foreground: oklch(0.94 0.012 85);
+  --card: oklch(0.205 0.014 258);
+  --card-foreground: oklch(0.94 0.012 85);
+  --popover: oklch(0.205 0.014 258);
+  --popover-foreground: oklch(0.94 0.012 85);
+  --primary: oklch(0.78 0.15 73);
+  --primary-foreground: oklch(0.18 0.02 70);
+  --secondary: oklch(0.7 0.09 195);
+  --secondary-foreground: oklch(0.16 0.02 195);
+  --muted: oklch(0.24 0.014 258);
+  --muted-foreground: oklch(0.65 0.02 90);
+  --accent: oklch(0.27 0.016 258);
+  --accent-foreground: oklch(0.94 0.012 85);
+  --destructive: oklch(0.65 0.2 25);
+  --border: oklch(1 0 0 / 10%);
+  --input: oklch(1 0 0 / 12%);
+  --ring: oklch(0.78 0.15 73 / 50%);
+  --chart-1: oklch(0.78 0.15 73);
+  --chart-2: oklch(0.7 0.09 195);
+  --chart-3: oklch(0.6 0.1 258);
+  --chart-4: oklch(0.55 0.12 30);
+  --chart-5: oklch(0.65 0.02 90);
   --sidebar: oklch(0.18 0.012 258);
   --sidebar-foreground: oklch(0.94 0.012 85);
   --sidebar-primary: oklch(0.78 0.15 73);

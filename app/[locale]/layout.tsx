@@ -56,6 +56,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
       'asc install-skills',
     ],
     alternates: localeAlternates(locale, '/'),
+    verification: { google: '1d9UJy-zMMxONy6znvqpit5-xQsHr_yBgMG_0n8wE0U' },
     openGraph: {
       type: 'website',
       locale: LOCALE_META[locale].ogLocale,

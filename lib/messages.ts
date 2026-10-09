@@ -123,6 +123,7 @@ export const messages = {
     a: "本页内容整理自 ",
     b: " 与 ",
     c: " 公开文档，非官方维护，仅作中文使用示例参考，与 Apple 无关联。",
+    madeBy: "由 {name} 制作",
   },
   jsonld: {
     appDescription:

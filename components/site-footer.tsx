@@ -4,6 +4,7 @@ import type { Locale } from "@/lib/i18n"
 export function SiteFooter({ locale }: { locale: Locale }) {
   const m = getMessages(locale).footer
   const a = "text-primary hover:underline"
+  const [madeBefore, madeAfter] = m.madeBy.split("{name}")
   return (
     <footer className="mt-20 border-t border-border">
       <div className="mx-auto max-w-5xl px-4 py-8 sm:px-6">
@@ -17,6 +18,13 @@ export function SiteFooter({ locale }: { locale: Locale }) {
             app-store-connect-cli-skills
           </a>
           {m.c}
+        </p>
+        <p className="mt-3 font-mono text-xs text-muted-foreground">
+          {madeBefore}
+          <a href="https://extrastu.cn" target="_blank" rel="noreferrer" className={a}>
+            extrastu
+          </a>
+          {madeAfter}
         </p>
       </div>
     </footer>
